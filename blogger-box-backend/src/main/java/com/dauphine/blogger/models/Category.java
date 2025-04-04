@@ -34,7 +34,7 @@ public class Category {
     }
 
 
-    public UUID getUuid() {
+    public UUID getId() {
         return id;
     }
 
@@ -49,5 +49,6 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
+
 
 }

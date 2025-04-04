@@ -33,11 +33,21 @@ public class PostServiceImpl implements PostService {
     public List<Post> getAllByCategory(UUID categoryID) {
         List<Post> postscategory = new ArrayList<>();
         for (Post post : repository.findAll()) {
-            if (post.getCategory().getUuid() == categoryID) {
+            if (post.getCategory().getId() == categoryID) {
                 postscategory.add(post);
             }
         }
         return postscategory;
+    }
+
+    @Override
+    public List<Post> getAllLikeTitle() {
+        return List.of();
+    }
+
+    @Override
+    public List<Post> getAllSortedByCreationDateDesc() {
+        return List.of();
     }
 
     @Override

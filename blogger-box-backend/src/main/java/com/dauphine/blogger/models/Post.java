@@ -4,10 +4,7 @@ import java.util.Date;
 import java.util.UUID;
 import com.dauphine.blogger.models.Category;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="post")
@@ -22,7 +19,8 @@ public class Post {
     @Column(name="created_date")
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date created_date;
-    @Column(name="category_id")
+    @ManyToOne
+    @JoinColumn(name="category_id")
     private Category category;
 
     public Post(UUID id, String title, String content, Date created_date, Category category) {

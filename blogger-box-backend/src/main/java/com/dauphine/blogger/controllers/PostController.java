@@ -53,8 +53,9 @@ public class PostController {
     }
 
     @DeleteMapping("{id}")
-    public UUID deleteCategory(@PathVariable UUID id){
-        return postService.deletePost(id);
+    public boolean deleteCategory(@PathVariable UUID id){
+        postService.deletePost(id);
+        return true;
     }
 
     @GetMapping("/latest")

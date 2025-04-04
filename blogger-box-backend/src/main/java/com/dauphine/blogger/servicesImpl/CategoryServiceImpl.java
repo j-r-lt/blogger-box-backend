@@ -17,7 +17,7 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryServiceImpl(CategoryRepository repository) {
         this.repository = repository;
     }
-    public CategoryServiceImpl() {}
+
 
     @Override
     public List<Category> getAll() {
@@ -51,6 +51,11 @@ public class CategoryServiceImpl implements CategoryService {
     public boolean deleteById(UUID id) {
         repository.deleteById(id);
         return true;
+    }
+
+    @Override
+    public List<Category> getAllLikeName() {
+        return List.of();
     }
 
 

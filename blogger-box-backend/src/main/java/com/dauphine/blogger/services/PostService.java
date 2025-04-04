@@ -25,4 +25,6 @@ public interface PostService {
 
 
     List<Post> getAllLikeTitle();
+
+    List<Post> getAllSortedByCreationDateDesc();
 }
