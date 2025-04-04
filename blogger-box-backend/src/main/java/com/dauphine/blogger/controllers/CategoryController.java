@@ -6,7 +6,6 @@ import com.dauphine.blogger.services.CategoryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,8 +44,8 @@ public class CategoryController {
     }
 
     @DeleteMapping("{id}")
-    public UUID deleteCategory(@PathVariable UUID id){
-        return categoryService.deleteCategory(id);
+    public boolean deleteCategory(@PathVariable UUID id){
+        return categoryService.deleteById(id);
     }
 
 }

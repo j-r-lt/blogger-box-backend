@@ -2,6 +2,7 @@ package com.dauphine.blogger.models;
 
 import java.util.Date;
 import java.util.UUID;
+import com.dauphine.blogger.models.Category;
 
 public class Post {
     private UUID uuid;
@@ -59,4 +60,6 @@ public class Post {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+
 }

@@ -1,10 +1,7 @@
 package com.dauphine.blogger.controllers;
 
-import com.dauphine.blogger.dto.CategoryRequest;
 import com.dauphine.blogger.dto.PostRequest;
-import com.dauphine.blogger.models.Category;
 import com.dauphine.blogger.models.Post;
-import com.dauphine.blogger.services.CategoryService;
 import com.dauphine.blogger.services.PostService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
