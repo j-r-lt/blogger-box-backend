@@ -1,8 +1,10 @@
 package com.dauphine.blogger.controllers;
 
 import com.dauphine.blogger.dto.PostRequest;
+import com.dauphine.blogger.models.Category;
 import com.dauphine.blogger.models.Post;
 import com.dauphine.blogger.services.PostService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +26,15 @@ public class PostController {
     }
 
     @GetMapping
-    public List<Post> getAll(){
-        return postService.getAll();
+    @Operation(
+            summary = "Get all posts",
+            description = "Retrieve all posts or filter by title"
+    )
+    public List<Post> getAll(@RequestParam(required=false) String title){
+        List <Post> posts = title == null || title.isBlank()
+                ? postService.getAll()
+                : postService.getAllLikeTitle();
+        return posts;
     }
 
     @GetMapping("{id}")

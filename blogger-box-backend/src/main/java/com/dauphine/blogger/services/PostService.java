@@ -23,4 +23,6 @@ public interface PostService {
     //List<Post> getAllSortedByCreationDateDesc() ;
     List<Post> getAllByCategory(UUID categoryId) ;
 
+
+    List<Post> getAllLikeTitle();
 }
