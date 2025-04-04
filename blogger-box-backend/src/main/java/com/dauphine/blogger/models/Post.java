@@ -3,6 +3,7 @@ package com.dauphine.blogger.models;
 import java.util.Date;
 import java.util.UUID;
 import com.dauphine.blogger.models.Category;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -19,6 +20,7 @@ public class Post {
     @Column(name="content")
     private String content;
     @Column(name="created_date")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date created_date;
     @Column(name="category_id")
     private Category category;
