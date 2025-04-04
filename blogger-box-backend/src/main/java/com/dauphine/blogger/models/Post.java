@@ -3,16 +3,28 @@ package com.dauphine.blogger.models;
 import java.util.Date;
 import java.util.UUID;
 import com.dauphine.blogger.models.Category;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name="post")
 public class Post {
-    private UUID uuid;
+    @Id
+    @Column(name="id")
+    private UUID id;
+    @Column(name="title")
     private String title;
+    @Column(name="content")
     private String content;
+    @Column(name="created_date")
     private Date created_date;
+    @Column(name="category_id")
     private Category category;
 
-    public Post(UUID uuid, String title, String content, Date created_date, Category category) {
-        this.uuid = uuid;
+    public Post(UUID id, String title, String content, Date created_date, Category category) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.created_date = created_date;
@@ -30,11 +42,11 @@ public class Post {
     }
 
     public UUID getUuid() {
-        return uuid;
+        return id;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public void setUuid(UUID id) {
+        this.id = id;
     }
 
     public String getContent() {

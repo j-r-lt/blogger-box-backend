@@ -29,6 +29,10 @@ public class Category {
     public Category() {
     }
 
+    public Category(String name) {
+        this.name=name;
+    }
+
 
     public UUID getUuid() {
         return id;

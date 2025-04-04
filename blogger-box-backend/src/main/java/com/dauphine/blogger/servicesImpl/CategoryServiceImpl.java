@@ -2,6 +2,7 @@ package com.dauphine.blogger.servicesImpl;
 
 import com.dauphine.blogger.dto.CategoryRequest;
 import com.dauphine.blogger.models.Category;
+import com.dauphine.blogger.repositories.CategoryRepository;
 import com.dauphine.blogger.services.CategoryService;
 import org.springframework.stereotype.Service;
 
@@ -11,52 +12,45 @@ import java.util.UUID;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
+    private final CategoryRepository repository;
 
-    private final List<Category> categories;
-
-    public CategoryServiceImpl() {
-        categories = new ArrayList<>();
+    public CategoryServiceImpl(CategoryRepository repository) {
+        this.repository = repository;
     }
+    public CategoryServiceImpl() {}
 
     @Override
     public List<Category> getAll() {
-        return categories;
+        return repository.findAll();
     }
 
     @Override
     public Category getById(UUID id) {
-        for (Category category : categories) {
-            if (category.getUuid().equals(id)) {
-                return category;
-            }
-        }
-        return null;
+        return repository.findById(id)
+                    .orElse(null);
     }
 
     @Override
-    public Category create(CategoryRequest categoryRequest){
-        Category category = new Category();
-        category.setName(categoryRequest.getName());
-        category.setUuid(UUID.randomUUID());
-        categories.add(category);
-        return category;
+    public Category create(String name){
+        Category category = new Category(name);
+        return repository.save(category);
     }
 
 
     @Override
     public Category update(UUID id, String name) {
-        for (Category category : categories) {
-            if (category.getUuid().equals(id)) {
-                category.setName(name);
-                return category;
-            }
+        Category category = getById(id);
+        if (category == null) {
+            return null;
         }
-        return null;
+        category.setName(name);
+        return repository.save(category);
     }
 
     @Override
     public boolean deleteById(UUID id) {
-        return categories.removeIf(category -> category.getUuid().equals(id));
+        repository.deleteById(id);
+        return true;
     }
 
 

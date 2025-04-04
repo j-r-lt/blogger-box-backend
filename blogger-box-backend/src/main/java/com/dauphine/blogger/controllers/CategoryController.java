@@ -34,8 +34,8 @@ public class CategoryController {
     }
 
     @PostMapping
-    public Category create(CategoryRequest categoryRequest){
-        return categoryService.create(categoryRequest);
+    public Category create(@RequestBody String name){
+        return categoryService.create(name);
     }
 
     @PutMapping("{id}")

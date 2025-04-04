@@ -12,7 +12,7 @@ public interface CategoryService {
 
     List<Category> getAll();
     Category getById(UUID id);
-    Category create(CategoryRequest categoryRequest);
+    Category create(String name);
     Category update(UUID id, String name);
     boolean deleteById(UUID id);
 
