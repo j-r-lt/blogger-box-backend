@@ -20,7 +20,7 @@ public class GlobalDefaultExceptionHandler {
 
     @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
     public ResponseEntity<Object> handleDataIntegrityViolation(org.springframework.dao.DataIntegrityViolationException ex) {
-        return buildResponse(HttpStatus.CONFLICT, "Impossible de supprimer : la catégorie est utilisée par d'autres entités ( posts ).");
+        return buildResponse(HttpStatus.CONFLICT, "Impossible de supprimer : la catégorie est utilisée par un ou des post(s) ).");
     }
 
 

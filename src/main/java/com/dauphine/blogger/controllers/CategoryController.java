@@ -57,10 +57,10 @@ public class CategoryController {
             summary = "Create new category",
             description = "Create new category, only required field is the name"
     )
-    public ResponseEntity<Category> create(@RequestBody CategoryRequest categoryRequest){
-        Category category= categoryService.create(categoryRequest.getName());
-        return ResponseEntity.created(URI.create("1/categories/"+category.getId())).body(category);
-
+    public ResponseEntity<Category> create(@RequestBody CategoryRequest categoryRequest) {
+        Category category = categoryService.create(categoryRequest.getName());
+        return ResponseEntity.created(URI.create("/v1/categories/" + category.getId()))
+                .body(category);
     }
 
     @PutMapping("{id}")
