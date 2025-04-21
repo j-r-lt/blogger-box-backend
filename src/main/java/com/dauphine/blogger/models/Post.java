@@ -2,7 +2,7 @@ package com.dauphine.blogger.models;
 
 import java.util.Date;
 import java.util.UUID;
-import com.dauphine.blogger.models.Category;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
@@ -31,6 +31,12 @@ public class Post {
         this.created_date = created_date;
         this.category = category;
     }
+    public Post(String title, String content, Date created_date, Category category) {
+        this.title = title;
+        this.content = content;
+        this.created_date = created_date;
+        this.category = category;
+    }
 
     public Post() {}
 
@@ -42,11 +48,11 @@ public class Post {
         this.title = title;
     }
 
-    public UUID getUuid() {
+    public UUID getId() {
         return id;
     }
 
-    public void setUuid(UUID id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

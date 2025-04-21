@@ -48,9 +48,8 @@ public class PostController {
     }
 
     @PostMapping
-    @Operation(
-            summary = "Create a post")
-    public Post create(PostRequest postRequest){
+    @Operation(summary = "Create a post")
+    public Post create(@RequestBody PostRequest postRequest) {
         return postService.create(postRequest);
     }
 

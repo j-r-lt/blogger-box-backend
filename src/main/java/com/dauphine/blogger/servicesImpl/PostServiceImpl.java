@@ -63,7 +63,7 @@ public class PostServiceImpl implements PostService {
         post.setContent(postRequest.getContent());
         post.setCreated_date(postRequest.getCreated_date());
         post.setCategory(categoryService.getById(postRequest.getCategory_id()));
-        post.setUuid(UUID.randomUUID());
+        //post.setId(UUID.randomUUID());
         repository.save(post);
         return post;
     }
