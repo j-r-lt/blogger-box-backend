@@ -6,6 +6,7 @@ import com.dauphine.blogger.models.Post;
 import com.dauphine.blogger.services.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,11 +31,12 @@ public class PostController {
             summary = "Get all posts",
             description = "Retrieve all posts or filter by title"
     )
-    public List<Post> getAll(@RequestParam(required=false) String title){
-        List <Post> posts = title == null || title.isBlank()
+
+    public ResponseEntity<List<Post>> getAll(@RequestParam(required = false) String title){
+        List<Post> posts = title == null || title.isBlank()
                 ? postService.getAll()
-                : postService.getAllLikeTitle();
-        return posts;
+                : postService.getAllLikeTitle(title);
+        return ResponseEntity.ok(posts);
     }
 
     @GetMapping("{id}")
@@ -56,17 +58,22 @@ public class PostController {
     @Operation(
             summary = "Update a post",
             description = "Update a post, only required its id ")
+    public Post update(@PathVariable UUID id, @RequestBody PostRequest request) {
+        return postService.update(id, request.getTitle(), request.getContent(), request.getCategory_id());
+    }
+    /*
     public Post update(@PathVariable UUID id, @RequestBody String title, @RequestBody String content, @RequestBody UUID category_id){
         return postService.update(id, title, content, category_id);
-    }
+    }*/
+
 
     @DeleteMapping("{id}")
     @Operation(
             summary = "Delete a post",
             description = "Delete a post, only required its id ")
-    public boolean deleteCategory(@PathVariable UUID id){
+    public ResponseEntity<String> deletePost(@PathVariable UUID id){
         postService.deletePost(id);
-        return true;
+        return ResponseEntity.ok("Post avec l'id " + id + " a été supprimé avec succès.");
     }
 
     @GetMapping("/latest")

@@ -47,4 +47,8 @@ public class GlobalDefaultExceptionHandler {
     public ResponseEntity<Object> handleCategoryNotFound(CategoryNotFoundException ex) {
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
+    @ExceptionHandler(PostNotFoundException.class)
+    public ResponseEntity<Object> handlePostNotFound(PostNotFoundException ex) {
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
 }

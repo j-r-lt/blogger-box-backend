@@ -10,6 +10,7 @@ import jakarta.persistence.*;
 @Table(name="post")
 public class Post {
     @Id
+    @GeneratedValue
     @Column(name="id")
     private UUID id;
     @Column(name="title")

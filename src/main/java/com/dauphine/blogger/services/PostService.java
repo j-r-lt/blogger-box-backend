@@ -19,12 +19,12 @@ public interface PostService {
     Post getById(UUID id);
     Post create(PostRequest postRequest);
     Post update(UUID id, String title, String content, UUID category_id);
-    boolean deletePost(UUID id);
+    void deletePost(UUID id);
     //List<Post> getAllSortedByCreationDateDesc() ;
     List<Post> getAllByCategory(UUID categoryId) ;
 
 
-    List<Post> getAllLikeTitle();
+    List<Post> getAllLikeTitle(String title);
 
     List<Post> getAllSortedByCreationDateDesc();
 }

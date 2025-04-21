@@ -1,6 +1,7 @@
 package com.dauphine.blogger.servicesImpl;
 
 import com.dauphine.blogger.dto.PostRequest;
+import com.dauphine.blogger.exceptions.PostNotFoundException;
 import com.dauphine.blogger.models.Post;
 import com.dauphine.blogger.repositories.PostRepository;
 import com.dauphine.blogger.services.CategoryService;
@@ -26,7 +27,7 @@ public class PostServiceImpl implements PostService {
     public List<Post> getAllByCategory(UUID categoryID) {
         List<Post> postsCategory = new ArrayList<>();
         for (Post post : repository.findAll()) {
-            if (post.getCategory().getId() == categoryID) {
+            if (post.getCategory().getId().equals(categoryID)) {
                 postsCategory.add(post);
             }
         }
@@ -34,8 +35,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> getAllLikeTitle() {
-        return List.of();
+    public List<Post> getAllLikeTitle(String title) {
+        return repository.findByTitleContainingIgnoreCase(title);  // Recherche insensible à la casse
     }
 
     @Override
@@ -52,7 +53,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post getById(UUID id) {
         return repository.findById(id)
-                .orElse(null);
+                .orElseThrow(() -> new PostNotFoundException("Post avec l'id " + id + " non trouvé."));
     }
 
     @Override
@@ -67,19 +68,21 @@ public class PostServiceImpl implements PostService {
         return post;
     }
 
-
     @Override
-    public Post update(UUID id, String title, String content, UUID category_id){
-        Post ret = getById(id);
-        ret.setTitle(title);
-        ret.setContent(content);
-        ret.setCategory(categoryService.getById(category_id));
-        return repository.save(ret);
+    public Post update(UUID id, String title, String content, UUID categoryId) {
+        Post post = repository.findById(id)
+                .orElseThrow(() -> new PostNotFoundException("Post avec l'id " + id + " non trouvé."));
+
+        post.setTitle(title);
+        post.setContent(content);
+        post.setCategory(categoryService.getById(categoryId));
+        return repository.save(post);
     }
 
-    @Override
-    public boolean deletePost(UUID id) {
+    public void deletePost(UUID id) {
+        if (!repository.existsById(id)) {
+            throw new PostNotFoundException("Post avec l'id " + id + " non trouvé.");
+        }
         repository.deleteById(id);
-        return  true;
     }
 }
