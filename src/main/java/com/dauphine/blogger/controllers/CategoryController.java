@@ -5,9 +5,9 @@ import com.dauphine.blogger.models.Category;
 import com.dauphine.blogger.services.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
@@ -31,10 +31,10 @@ public class CategoryController {
             summary = "Get all categories",
             description = "Retrieve all categories or filter by name"
     )
-    public ResponseEntity<List<Category>> getAll(@RequestParam(required=false) String name){
-        List <Category> categories = name == null || name.isBlank()
+    public ResponseEntity<List<Category>> getAll(@RequestParam(required = false) String name) {
+        List<Category> categories = name == null || name.isBlank()
                 ? categoryService.getAll()
-                : categoryService.getAllLikeName();
+                : categoryService.getAllLikeName(name);
         return ResponseEntity.ok(categories);
     }
 
@@ -42,10 +42,10 @@ public class CategoryController {
     @Operation(
             summary = "Get a category",
             description = "Get a category, only required its id ")
-    public Category getById(@PathVariable UUID id){
-        return categoryService.getById(id);
+    public ResponseEntity<Category> getById(@PathVariable UUID id) throws ChangeSetPersister.NotFoundException {
+        Category category = categoryService.getById(id);
+        return ResponseEntity.ok(category);
     }
-
 
 
     @PostMapping
@@ -63,16 +63,23 @@ public class CategoryController {
     @Operation(
             summary = "Update a category",
             description = "Update a category, only required its id ")
-    public Category update(@PathVariable UUID id, @RequestBody String name){
-        return categoryService.update(id, name);
+    public ResponseEntity<Category> update(@PathVariable UUID id, @RequestBody String name)
+            throws ChangeSetPersister.NotFoundException {
+        Category updated = categoryService.update(id, name);
+        return ResponseEntity.ok(updated);
     }
+
 
     @DeleteMapping("{id}")
     @Operation(
             summary = "Delete a category",
             description = "Delete a category, only required its id ")
-    public boolean deleteCategory(@PathVariable UUID id){
-        return categoryService.deleteById(id);
+    public ResponseEntity<Void> deleteCategory(@PathVariable UUID id) throws ChangeSetPersister.NotFoundException {
+        boolean deleted = categoryService.deleteById(id);
+        if (!deleted) {
+            throw new ChangeSetPersister.NotFoundException();
+        }
+        return ResponseEntity.noContent().build();
     }
 
 }

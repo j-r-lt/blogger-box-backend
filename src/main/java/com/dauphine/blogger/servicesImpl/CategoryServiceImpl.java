@@ -1,12 +1,9 @@
 package com.dauphine.blogger.servicesImpl;
 
-import com.dauphine.blogger.dto.CategoryRequest;
 import com.dauphine.blogger.models.Category;
 import com.dauphine.blogger.repositories.CategoryRepository;
 import com.dauphine.blogger.services.CategoryService;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,10 +49,15 @@ public class CategoryServiceImpl implements CategoryService {
         repository.deleteById(id);
         return true;
     }
-
+/*
     @Override
     public List<Category> getAllLikeName() {
         return List.of();
+    }*/
+
+    @Override
+    public List<Category> getAllLikeName(String name) {
+        return repository.findAllLikeName(name);
     }
 
 

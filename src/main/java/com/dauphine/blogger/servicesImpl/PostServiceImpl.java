@@ -1,14 +1,11 @@
 package com.dauphine.blogger.servicesImpl;
 
 import com.dauphine.blogger.dto.PostRequest;
-import com.dauphine.blogger.models.Category;
 import com.dauphine.blogger.models.Post;
-import com.dauphine.blogger.repositories.CategoryRepository;
 import com.dauphine.blogger.repositories.PostRepository;
 import com.dauphine.blogger.services.CategoryService;
 import com.dauphine.blogger.services.PostService;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -25,19 +22,15 @@ public class PostServiceImpl implements PostService {
     }
 
 
-
-    //List<Post> getAllSortedByCreationDateDesc() ;
-
-
     @Override
     public List<Post> getAllByCategory(UUID categoryID) {
-        List<Post> postscategory = new ArrayList<>();
+        List<Post> postsCategory = new ArrayList<>();
         for (Post post : repository.findAll()) {
             if (post.getCategory().getId() == categoryID) {
-                postscategory.add(post);
+                postsCategory.add(post);
             }
         }
-        return postscategory;
+        return postsCategory;
     }
 
     @Override
@@ -75,7 +68,7 @@ public class PostServiceImpl implements PostService {
     }
 
 
-
+    @Override
     public Post update(UUID id, String title, String content, UUID category_id){
         Post ret = getById(id);
         ret.setTitle(title);
