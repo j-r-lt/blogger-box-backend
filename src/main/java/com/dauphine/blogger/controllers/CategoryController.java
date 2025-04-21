@@ -57,6 +57,7 @@ public class CategoryController {
     }
 
     @PutMapping("{id}")
+    @Operation(summary = "Retrieve a category by its id ")
     public Category update(@PathVariable UUID id, @RequestBody String name){
         return categoryService.update(id, name);
     }
