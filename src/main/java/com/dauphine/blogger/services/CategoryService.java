@@ -14,7 +14,7 @@ public interface CategoryService {
     Category getById(UUID id);
     Category create(String name);
     Category update(UUID id, String name);
-    boolean deleteById(UUID id);
+    void deleteById(UUID id);
 
     List<Category> getAllLikeName(String name) ;
 }

@@ -1,5 +1,6 @@
 package com.dauphine.blogger.servicesImpl;
 
+import com.dauphine.blogger.exceptions.CategoryNotFoundException;
 import com.dauphine.blogger.models.Category;
 import com.dauphine.blogger.repositories.CategoryRepository;
 import com.dauphine.blogger.services.CategoryService;
@@ -43,11 +44,22 @@ public class CategoryServiceImpl implements CategoryService {
         category.setName(name);
         return repository.save(category);
     }
-
+/*
     @Override
     public boolean deleteById(UUID id) {
+        if (!repository.existsById(id)) {
+            return false;
+        }
         repository.deleteById(id);
         return true;
+    }*/
+
+    @Override
+    public void deleteById(UUID id) {
+        if (!repository.existsById(id)) {
+            throw new CategoryNotFoundException("Catégorie avec l'id " + id + " non trouvée.");
+        }
+        repository.deleteById(id);
     }
 /*
     @Override

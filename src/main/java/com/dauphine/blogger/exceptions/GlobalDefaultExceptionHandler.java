@@ -18,6 +18,12 @@ public class GlobalDefaultExceptionHandler {
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
+    @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
+    public ResponseEntity<Object> handleDataIntegrityViolation(org.springframework.dao.DataIntegrityViolationException ex) {
+        return buildResponse(HttpStatus.CONFLICT, "Impossible de supprimer : la catégorie est utilisée par d'autres entités ( posts ).");
+    }
+
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Object> handleBadRequest(IllegalArgumentException ex) {
         return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
@@ -36,5 +42,9 @@ public class GlobalDefaultExceptionHandler {
         body.put("message", message);
 
         return new ResponseEntity<>(body, status);
+    }
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<Object> handleCategoryNotFound(CategoryNotFoundException ex) {
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 }

@@ -1,6 +1,7 @@
 package com.dauphine.blogger.controllers;
 
 import com.dauphine.blogger.dto.CategoryRequest;
+import com.dauphine.blogger.exceptions.CategoryNotFoundException;
 import com.dauphine.blogger.models.Category;
 import com.dauphine.blogger.services.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,8 +43,11 @@ public class CategoryController {
     @Operation(
             summary = "Get a category",
             description = "Get a category, only required its id ")
-    public ResponseEntity<Category> getById(@PathVariable UUID id) throws ChangeSetPersister.NotFoundException {
+    public ResponseEntity<Category> getById(@PathVariable UUID id) {
         Category category = categoryService.getById(id);
+        if (category == null) {
+            throw new CategoryNotFoundException("Catégorie avec l'id " + id + " non trouvée.");
+        }
         return ResponseEntity.ok(category);
     }
 
@@ -63,9 +67,11 @@ public class CategoryController {
     @Operation(
             summary = "Update a category",
             description = "Update a category, only required its id ")
-    public ResponseEntity<Category> update(@PathVariable UUID id, @RequestBody String name)
-            throws ChangeSetPersister.NotFoundException {
+    public ResponseEntity<Category> update(@PathVariable UUID id, @RequestBody String name) {
         Category updated = categoryService.update(id, name);
+        if (updated == null) {
+            throw new CategoryNotFoundException("Impossible de mettre à jour : catégorie avec l'id " + id + " non trouvée.");
+        }
         return ResponseEntity.ok(updated);
     }
 
@@ -74,12 +80,9 @@ public class CategoryController {
     @Operation(
             summary = "Delete a category",
             description = "Delete a category, only required its id ")
-    public ResponseEntity<Void> deleteCategory(@PathVariable UUID id) throws ChangeSetPersister.NotFoundException {
-        boolean deleted = categoryService.deleteById(id);
-        if (!deleted) {
-            throw new ChangeSetPersister.NotFoundException();
-        }
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> deleteCategory(@PathVariable UUID id) {
+        categoryService.deleteById(id);
+        return ResponseEntity.noContent().build(); // 204
     }
 
 }
