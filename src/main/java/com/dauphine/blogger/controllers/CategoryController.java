@@ -40,8 +40,8 @@ public class CategoryController {
 
     @GetMapping("{id}")
     @Operation(
-            summary = "Retrieve a category",
-            description = "Retrieve a category, only required its id ")
+            summary = "Get a category",
+            description = "Get a category, only required its id ")
     public Category getById(@PathVariable UUID id){
         return categoryService.getById(id);
     }
