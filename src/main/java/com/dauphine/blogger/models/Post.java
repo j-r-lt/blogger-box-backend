@@ -40,6 +40,13 @@ public class Post {
 
     public Post() {}
 
+    @PrePersist
+    public void prePersist() {
+        if (this.createdDate == null) {
+            this.createdDate = new Date();  // Définit la date de création si elle n'est pas déjà définie
+        }
+    }
+
     public String getTitle() {
         return title;
     }

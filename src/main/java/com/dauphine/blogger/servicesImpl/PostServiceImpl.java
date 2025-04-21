@@ -10,6 +10,7 @@ import com.dauphine.blogger.services.CategoryService;
 import com.dauphine.blogger.services.PostService;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,7 +64,7 @@ public class PostServiceImpl implements PostService {
         Post post = new Post();
         post.setTitle(postRequest.getTitle());
         post.setContent(postRequest.getContent());
-        post.setCreated_date(postRequest.getCreated_date());
+        post.setCreated_date(new Date()); // Assure-toi que la date est définie
         Category category = categoryService.getById(postRequest.getCategory_id());
         if (category == null) {
             throw new CategoryNotFoundException("Catégorie avec l'id " + postRequest.getCategory_id() + " non trouvée.");

@@ -77,7 +77,7 @@ public class PostController {
 
     @GetMapping("/latest")
     @Operation(
-            summary = "Get  posts by creation date ")
+            summary = "Get posts by creation date ")
     public List<Post> getAllSortedByCreationDate() {
         return postService.getAllSortedByCreationDateDesc();
     }
