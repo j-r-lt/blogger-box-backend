@@ -9,4 +9,5 @@ import java.util.UUID;
 
 public interface PostRepository extends JpaRepository<Post, UUID> {
     List<Post> findByTitleContainingIgnoreCase(String title);
+    List<Post> findAllByOrderByCreatedDateDesc();
 }

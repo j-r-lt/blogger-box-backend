@@ -19,22 +19,22 @@ public class Post {
     private String content;
     @Column(name="created_date")
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    private Date created_date;
+    private Date createdDate;
     @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;
 
-    public Post(UUID id, String title, String content, Date created_date, Category category) {
+    public Post(UUID id, String title, String content, Date createdDate, Category category) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.created_date = created_date;
+        this.createdDate = createdDate;
         this.category = category;
     }
-    public Post(String title, String content, Date created_date, Category category) {
+    public Post(String title, String content, Date createdDate, Category category) {
         this.title = title;
         this.content = content;
-        this.created_date = created_date;
+        this.createdDate = createdDate;
         this.category = category;
     }
 
@@ -65,11 +65,11 @@ public class Post {
     }
 
     public Date getCreated_date() {
-        return created_date;
+        return createdDate;
     }
 
-    public void setCreated_date(Date created_date) {
-        this.created_date = created_date;
+    public void setCreated_date(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Category getCategory() {
