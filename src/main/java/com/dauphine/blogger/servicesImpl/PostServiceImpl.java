@@ -1,7 +1,9 @@
 package com.dauphine.blogger.servicesImpl;
 
 import com.dauphine.blogger.dto.PostRequest;
+import com.dauphine.blogger.exceptions.CategoryNotFoundException;
 import com.dauphine.blogger.exceptions.PostNotFoundException;
+import com.dauphine.blogger.models.Category;
 import com.dauphine.blogger.models.Post;
 import com.dauphine.blogger.repositories.PostRepository;
 import com.dauphine.blogger.services.CategoryService;
@@ -62,8 +64,11 @@ public class PostServiceImpl implements PostService {
         post.setTitle(postRequest.getTitle());
         post.setContent(postRequest.getContent());
         post.setCreated_date(postRequest.getCreated_date());
-        post.setCategory(categoryService.getById(postRequest.getCategory_id()));
-        //post.setId(UUID.randomUUID());
+        Category category = categoryService.getById(postRequest.getCategory_id());
+        if (category == null) {
+            throw new CategoryNotFoundException("Catégorie avec l'id " + postRequest.getCategory_id() + " non trouvée.");
+        }
+        post.setCategory(category);
         repository.save(post);
         return post;
     }
