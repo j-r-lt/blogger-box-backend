@@ -39,6 +39,9 @@ public class CategoryController {
     }
 
     @GetMapping("{id}")
+    @Operation(
+            summary = "Retrieve a category",
+            description = "Retrieve a category, only required its id ")
     public Category getById(@PathVariable UUID id){
         return categoryService.getById(id);
     }
@@ -57,12 +60,17 @@ public class CategoryController {
     }
 
     @PutMapping("{id}")
-    @Operation(summary = "Retrieve a category by its id ")
+    @Operation(
+            summary = "Update a category",
+            description = "Update a category, only required its id ")
     public Category update(@PathVariable UUID id, @RequestBody String name){
         return categoryService.update(id, name);
     }
 
     @DeleteMapping("{id}")
+    @Operation(
+            summary = "Delete a category",
+            description = "Delete a category, only required its id ")
     public boolean deleteCategory(@PathVariable UUID id){
         return categoryService.deleteById(id);
     }
